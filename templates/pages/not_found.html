@@ -1,0 +1,51 @@
+{# ─────────────────────────────────────────────────────────────
+   404 Not Found Page — Samaritan Theme
+   
+   Displayed by the fallback handler in routes/pages.rs when no
+   route matches. Styled as a "system error" in the Samaritan
+   surveillance aesthetic.
+───────────────────────────────────────────────────────────── #}
+{% extends "base.html" %}
+
+{% block title %}404 — NOT FOUND{% endblock %}
+
+{% block content %}
+<main class="error-page">
+    <div class="error-page__inner">
+        {# ── Glitch code ─────────────────────────────────── #}
+        <div class="error-page__code">
+            <span class="error-page__digit" data-char="4">4</span>
+            <span class="error-page__digit error-page__digit--accent" data-char="0">0</span>
+            <span class="error-page__digit" data-char="4">4</span>
+        </div>
+
+        {# ── Message ─────────────────────────────────────── #}
+        <h1 class="error-page__title">TARGET NOT FOUND</h1>
+        <p class="error-page__message">
+            The requested resource does not exist in the current
+            system index. Verify the address or return to a known
+            location.
+        </p>
+
+        {# ── Action ──────────────────────────────────────── #}
+        <div class="error-page__actions">
+            <a href="/" class="btn btn--primary">
+                <span class="btn__text">RETURN TO BASE</span>
+            </a>
+            <a href="/products" class="btn btn--ghost">
+                <span class="btn__text">BROWSE PRODUCTS</span>
+            </a>
+        </div>
+
+        {# ── Diagnostic info (aesthetic only) ────────────── #}
+        <div class="error-page__diagnostic">
+            <code>
+                ERR::ROUTE_NOT_MATCHED<br/>
+                TIMESTAMP: {{ "now" | date(format="%Y-%m-%dT%H:%M:%S") }}Z<br/>
+                STATUS: 404<br/>
+                PROTOCOL: HTTP/2
+            </code>
+        </div>
+    </div>
+</main>
+{% endblock %}

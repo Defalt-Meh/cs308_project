@@ -1,0 +1,126 @@
+{# ─────────────────────────────────────────────────────────────
+   Register Page — Samaritan Theme
+   
+   Extends base.html. Registration form collects all required
+   customer fields per Requirement 13: name, email, password,
+   tax ID (optional), home address (optional).
+   
+   Submits via HTMX. On success → auto-login → redirect to /.
+   On failure → error fragment swapped into #auth-error.
+───────────────────────────────────────────────────────────── #}
+{% extends "base.html" %}
+
+{% block title %}REGISTER{% endblock %}
+
+{% block content %}
+<main class="auth-page">
+    <div class="auth-card auth-card--wide">
+        {# ── Header ──────────────────────────────────────── #}
+        <div class="auth-card__header">
+            <svg class="auth-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <polygon points="12,2 22,20 2,20" />
+            </svg>
+            <h1 class="auth-card__title">ENROLL</h1>
+            <p class="auth-card__subtitle">NEW OPERATOR REGISTRATION</p>
+        </div>
+
+        {# ── Error container ─────────────────────────────── #}
+        <div id="auth-error" class="auth-card__error"></div>
+
+        {# ── Registration form ───────────────────────────── #}
+        <form
+            class="auth-form"
+            hx-post="/auth/register"
+            hx-target="#auth-error"
+            hx-swap="innerHTML"
+            hx-indicator="#register-spinner"
+        >
+            {# Required fields #}
+            <div class="form-group">
+                <label class="form-label" for="name">FULL NAME</label>
+                <input
+                    class="form-input"
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="John Doe"
+                    required
+                    autocomplete="name"
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="email">EMAIL</label>
+                <input
+                    class="form-input"
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="operator@system.net"
+                    required
+                    autocomplete="email"
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">PASSWORD</label>
+                <input
+                    class="form-input"
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="••••••••"
+                    required
+                    minlength="8"
+                    autocomplete="new-password"
+                />
+                <span class="form-hint">MINIMUM 8 CHARACTERS</span>
+            </div>
+
+            {# Optional fields (Req 13: tax_id, home_address) #}
+            <div class="form-row">
+                <div class="form-group form-group--half">
+                    <label class="form-label" for="tax_id">TAX ID <span class="form-optional">(OPTIONAL)</span></label>
+                    <input
+                        class="form-input"
+                        type="text"
+                        id="tax_id"
+                        name="tax_id"
+                        placeholder="1234567890"
+                    />
+                </div>
+
+                <div class="form-group form-group--half">
+                    <label class="form-label" for="home_address">HOME ADDRESS <span class="form-optional">(OPTIONAL)</span></label>
+                    <input
+                        class="form-input"
+                        type="text"
+                        id="home_address"
+                        name="home_address"
+                        placeholder="123 Main St, City"
+                    />
+                </div>
+            </div>
+
+            <button class="btn btn--primary btn--full" type="submit">
+                <span class="btn__text">CREATE ACCOUNT</span>
+                <span class="spinner" id="register-spinner"></span>
+            </button>
+        </form>
+
+        {# ── Footer link ────────────────────────────────── #}
+        <div class="auth-card__footer">
+            <span class="auth-card__footer-text">ALREADY REGISTERED?</span>
+            <a href="/auth/login" class="auth-card__footer-link">AUTHENTICATE</a>
+        </div>
+    </div>
+
+    {# ── Decorative grid ─────────────────────────────────── #}
+    <div class="auth-page__grid" aria-hidden="true">
+        <div class="auth-page__grid-line auth-page__grid-line--v1"></div>
+        <div class="auth-page__grid-line auth-page__grid-line--v2"></div>
+        <div class="auth-page__grid-line auth-page__grid-line--h1"></div>
+        <div class="auth-page__grid-line auth-page__grid-line--h2"></div>
+    </div>
+</main>
+{% endblock %}

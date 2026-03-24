@@ -1,0 +1,23 @@
+{# ─────────────────────────────────────────────────────────────
+   Footer Component — Samaritan Theme
+   
+   Minimal footer with a terminal/system status aesthetic.
+───────────────────────────────────────────────────────────── #}
+<footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__left">
+            <span class="footer__status">
+                <span class="footer__status-dot"></span>
+                SYSTEM ONLINE
+            </span>
+        </div>
+
+        <div class="footer__center">
+            <span class="footer__text">CS308 SOFTWARE ENGINEERING — SABANCI UNIVERSITY</span>
+        </div>
+
+        <div class="footer__right">
+            <span class="footer__text">&copy; {{ "now" | date(format="%Y") }} STORE</span>
+        </div>
+    </div>
+</footer>

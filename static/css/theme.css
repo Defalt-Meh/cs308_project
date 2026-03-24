@@ -1,0 +1,113 @@
+/* ═══════════════════════════════════════════════════════════════
+   THEME — Samaritan Design Tokens
+   
+   All visual decisions live here as CSS custom properties. Every
+   other stylesheet references these variables — never raw values.
+   To re-skin the entire app, only this file needs to change.
+   
+   Aesthetic: Person of Interest's Samaritan AI — cold, clinical,
+   dark, geometric. Near-black backgrounds, ice-blue accents,
+   monospaced typography, sharp corners, no rounded softness.
+═══════════════════════════════════════════════════════════════ */
+
+:root {
+    /* ── Palette ──────────────────────────────────────────── */
+    --color-black:          #050505;
+    --color-bg:             #0a0a0a;
+    --color-bg-raised:      #111111;
+    --color-bg-elevated:    #181818;
+    --color-surface:        #1e1e1e;
+    --color-surface-hover:  #252525;
+
+    --color-border:         #2a2a2a;
+    --color-border-light:   #333333;
+
+    --color-text-primary:   #e0e0e0;
+    --color-text-secondary: #888888;
+    --color-text-muted:     #555555;
+    --color-text-inverse:   #0a0a0a;
+
+    /* Samaritan's signature: cold ice-blue */
+    --color-accent:         #00d4ff;
+    --color-accent-dim:     #00a5c7;
+    --color-accent-glow:    rgba(0, 212, 255, 0.15);
+    --color-accent-subtle:  rgba(0, 212, 255, 0.06);
+
+    /* Semantic */
+    --color-success:        #00ff88;
+    --color-success-dim:    rgba(0, 255, 136, 0.12);
+    --color-warning:        #ffaa00;
+    --color-warning-dim:    rgba(255, 170, 0, 0.12);
+    --color-error:          #ff3355;
+    --color-error-dim:      rgba(255, 51, 85, 0.12);
+
+    /* ── Typography ───────────────────────────────────────── */
+    --font-mono:    'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+    --font-display: 'Rajdhani', 'Barlow Condensed', sans-serif;
+
+    --text-xs:   0.7rem;
+    --text-sm:   0.8rem;
+    --text-base: 0.9rem;
+    --text-lg:   1.05rem;
+    --text-xl:   1.25rem;
+    --text-2xl:  1.6rem;
+    --text-3xl:  2.2rem;
+    --text-4xl:  3.5rem;
+    --text-hero: 6rem;
+
+    --leading-tight:  1.2;
+    --leading-normal: 1.5;
+    --leading-relaxed: 1.7;
+
+    --tracking-tight:  -0.02em;
+    --tracking-normal:  0;
+    --tracking-wide:    0.08em;
+    --tracking-wider:   0.15em;
+    --tracking-widest:  0.25em;
+
+    /* ── Spacing ──────────────────────────────────────────── */
+    --space-1:  0.25rem;
+    --space-2:  0.5rem;
+    --space-3:  0.75rem;
+    --space-4:  1rem;
+    --space-5:  1.25rem;
+    --space-6:  1.5rem;
+    --space-8:  2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-20: 5rem;
+    --space-24: 6rem;
+
+    /* ── Layout ───────────────────────────────────────────── */
+    --container-max:  1280px;
+    --container-pad:  var(--space-6);
+    --nav-height:     60px;
+
+    /* ── Borders & Shapes ─────────────────────────────────── */
+    /* Samaritan: sharp, angular — no border-radius */
+    --radius-none: 0;
+    --radius-sm:   2px;
+    --border-width: 1px;
+
+    /* ── Shadows ──────────────────────────────────────────── */
+    --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.5);
+    --shadow-md:  0 4px 12px rgba(0, 0, 0, 0.6);
+    --shadow-lg:  0 8px 30px rgba(0, 0, 0, 0.7);
+    --shadow-glow: 0 0 20px var(--color-accent-glow);
+
+    /* ── Transitions ──────────────────────────────────────── */
+    --ease-default: cubic-bezier(0.25, 0.1, 0.25, 1);
+    --duration-fast:   120ms;
+    --duration-normal: 250ms;
+    --duration-slow:   500ms;
+
+    /* ── Z-index scale ────────────────────────────────────── */
+    --z-base:     1;
+    --z-dropdown: 100;
+    --z-sticky:   200;
+    --z-nav:      300;
+    --z-modal:    400;
+    --z-toast:    500;
+    --z-scanline: 600;
+}

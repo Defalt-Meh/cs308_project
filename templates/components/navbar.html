@@ -1,0 +1,77 @@
+{# ─────────────────────────────────────────────────────────────
+   Navbar Component — Samaritan Theme
+   
+   Auth-aware: shows different links based on whether `user` is
+   set in the template context. Uses HTMX for the logout button
+   (POST without a full page reload).
+   
+   Template variables:
+     user  — UserResponse (optional). If set, user is logged in.
+     user.name, user.role — displayed in the nav.
+───────────────────────────────────────────────────────────── #}
+<nav class="nav">
+    <div class="nav__inner">
+        {# ── Logo / Brand ────────────────────────────────── #}
+        <a href="/" class="nav__brand">
+            {# Triangle icon — Samaritan's signature mark #}
+            <svg class="nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <polygon points="12,2 22,20 2,20" />
+            </svg>
+            <span class="nav__title">STORE</span>
+            <span class="nav__subtitle">CS308</span>
+        </a>
+
+        {# ── Center links ────────────────────────────────── #}
+        <div class="nav__links">
+            <a href="/" class="nav__link">HOME</a>
+            <a href="/products" class="nav__link">PRODUCTS</a>
+            {% if user %}
+                <a href="/orders" class="nav__link">ORDERS</a>
+                <a href="/wishlist" class="nav__link">WISHLIST</a>
+            {% endif %}
+            {# Admin links — only shown for managers #}
+            {% if user and user.role == "sales_manager" %}
+                <a href="/admin/sales/dashboard" class="nav__link nav__link--admin">SALES PANEL</a>
+            {% endif %}
+            {% if user and user.role == "product_manager" %}
+                <a href="/admin/products/dashboard" class="nav__link nav__link--admin">PRODUCT PANEL</a>
+            {% endif %}
+        </div>
+
+        {# ── Right side: auth / cart ─────────────────────── #}
+        <div class="nav__actions">
+            {% if user %}
+                {# Cart button with item count (updated via HTMX) #}
+                <a href="/cart" class="nav__action" title="Cart">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="nav__action-icon">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg>
+                    <span class="nav__cart-count" id="cart-count">0</span>
+                </a>
+
+                {# User info + logout #}
+                <div class="nav__user">
+                    <span class="nav__user-name">{{ user.name | upper }}</span>
+                    <span class="nav__user-role">{{ user.role | replace(from="_", to=" ") | upper }}</span>
+                </div>
+                <button
+                    class="nav__action nav__action--logout"
+                    hx-post="/auth/logout"
+                    hx-swap="none"
+                    title="Logout"
+                >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="nav__action-icon">
+                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" y1="12" x2="9" y2="12" />
+                    </svg>
+                </button>
+            {% else %}
+                <a href="/auth/login" class="nav__btn nav__btn--ghost">LOG IN</a>
+                <a href="/auth/register" class="nav__btn nav__btn--primary">REGISTER</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,162 @@
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATIONS — Samaritan Motion System
+   
+   Keyframe definitions and animation utilities. The Samaritan
+   aesthetic uses restrained, purposeful motion:
+   - Slow pulsing glows (surveillance feel)
+   - Horizontal scan sweeps
+   - Quick, sharp reveals (no bounce or elastic)
+   - Subtle flicker on text (CRT monitor effect)
+═══════════════════════════════════════════════════════════════ */
+
+/* ── Triangle pulse — hero symbol breathing ────────────────── */
+@keyframes triangle-pulse {
+    0%, 100% {
+        opacity: 1;
+        filter: drop-shadow(0 0 4px var(--color-accent-glow));
+    }
+    50% {
+        opacity: 0.7;
+        filter: drop-shadow(0 0 12px var(--color-accent-glow));
+    }
+}
+
+/* ── Scan sweep — horizontal line on hero triangle ─────────── */
+@keyframes scan-sweep {
+    0%   { transform: translateY(-50px); opacity: 0; }
+    20%  { opacity: 0.6; }
+    80%  { opacity: 0.6; }
+    100% { transform: translateY(50px); opacity: 0; }
+}
+
+/* ── Status dot pulse — footer online indicator ────────────── */
+@keyframes pulse-dot {
+    0%, 100% {
+        opacity: 1;
+        box-shadow: 0 0 0 0 var(--color-success);
+    }
+    50% {
+        opacity: 0.6;
+        box-shadow: 0 0 0 4px rgba(0, 255, 136, 0);
+    }
+}
+
+/* ── Toast slide-in ────────────────────────────────────────── */
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ── Toast fade-out (applied via JS after delay) ──────────── */
+@keyframes toast-out {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+}
+
+/* ── Fade in from below — page content entrance ────────────── */
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── Spinner rotation — loading indicators ─────────────────── */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* ── Text flicker — subtle CRT effect for headings ─────────── */
+@keyframes text-flicker {
+    0%, 100% { opacity: 1; }
+    92%      { opacity: 1; }
+    93%      { opacity: 0.8; }
+    94%      { opacity: 1; }
+    96%      { opacity: 0.9; }
+    97%      { opacity: 1; }
+}
+
+/* ── Glow pulse — accent borders on hover ──────────────────── */
+@keyframes glow-pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 var(--color-accent-glow);
+    }
+    50% {
+        box-shadow: 0 0 16px 2px var(--color-accent-glow);
+    }
+}
+
+/* ── Glitch — 404 page digit effect ────────────────────────── */
+@keyframes glitch-shift {
+    0%, 100% { transform: translate(0); }
+    20%      { transform: translate(-2px, 1px); }
+    40%      { transform: translate(2px, -1px); }
+    60%      { transform: translate(-1px, -1px); }
+    80%      { transform: translate(1px, 2px); }
+}
+
+/* ── Utility classes ───────────────────────────────────────── */
+
+/* Apply to any element for a staggered fade-in entrance */
+.animate-in {
+    animation: fade-up var(--duration-slow) var(--ease-default) both;
+}
+.animate-in--d1 { animation-delay: 100ms; }
+.animate-in--d2 { animation-delay: 200ms; }
+.animate-in--d3 { animation-delay: 300ms; }
+.animate-in--d4 { animation-delay: 400ms; }
+.animate-in--d5 { animation-delay: 500ms; }
+
+/* CRT flicker — use sparingly on hero headings */
+.flicker {
+    animation: text-flicker 8s ease-in-out infinite;
+}
+
+/* Glitch effect for error page digits */
+.glitch {
+    animation: glitch-shift 0.3s ease-in-out infinite;
+}
+
+/* Glow on hover */
+.hover-glow:hover {
+    animation: glow-pulse 1.5s ease-in-out infinite;
+}
+
+/* HTMX loading indicator — hidden by default, shown when
+   htmx adds the .htmx-request class to a parent */
+.spinner {
+    display: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--color-border);
+    border-top-color: var(--color-accent);
+    animation: spin 0.6s linear infinite;
+}
+.spinner--sm {
+    width: 14px;
+    height: 14px;
+}
+.htmx-request .spinner,
+.htmx-request.spinner {
+    display: inline-block;
+}
+.htmx-request .btn__text {
+    opacity: 0.5;
+}

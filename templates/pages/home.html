@@ -1,0 +1,130 @@
+{# ─────────────────────────────────────────────────────────────
+   Home Page — Samaritan Theme
+   
+   Landing page with:
+   - Hero section with animated triangle mark
+   - Search bar (HTMX-powered, swaps results into grid)
+   - Featured products grid (placeholder until product_service)
+   - Category quick-links
+   
+   Template variables:
+     user              — UserResponse (optional)
+     featured_products — Vec<ProductResponse> (TODO)
+───────────────────────────────────────────────────────────── #}
+{% extends "base.html" %}
+
+{% block title %}HOME{% endblock %}
+
+{% block content %}
+<main class="home">
+
+    {# ── Hero Section ────────────────────────────────────── #}
+    <section class="hero">
+        <div class="hero__inner">
+            {# Animated triangle — Samaritan's core symbol #}
+            <div class="hero__symbol">
+                <svg class="hero__triangle" viewBox="0 0 200 180" fill="none" stroke="currentColor" stroke-width="0.75">
+                    <polygon points="100,10 190,170 10,170" class="hero__triangle-outer" />
+                    <polygon points="100,40 165,155 35,155" class="hero__triangle-inner" />
+                    {# Scanning beam line #}
+                    <line x1="10" y1="100" x2="190" y2="100" class="hero__scan-line" />
+                </svg>
+            </div>
+
+            <h1 class="hero__title">
+                {% if user %}
+                    WELCOME BACK, <span class="hero__highlight">{{ user.name | upper }}</span>
+                {% else %}
+                    SYSTEM <span class="hero__highlight">ONLINE</span>
+                {% endif %}
+            </h1>
+            <p class="hero__subtitle">BROWSE // SEARCH // ACQUIRE</p>
+
+            {# ── Search bar ──────────────────────────────── #}
+            <div class="hero__search">
+                <form class="search-bar"
+                      hx-get="/products/search"
+                      hx-target="#product-grid"
+                      hx-swap="innerHTML"
+                      hx-trigger="input changed delay:300ms, submit"
+                      hx-indicator="#search-spinner"
+                >
+                    <svg class="search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                    <input
+                        class="search-bar__input"
+                        type="search"
+                        name="q"
+                        placeholder="SEARCH PRODUCTS..."
+                        autocomplete="off"
+                    />
+                    <span class="spinner spinner--sm" id="search-spinner"></span>
+                </form>
+            </div>
+        </div>
+
+        {# ── Decorative corner marks ─────────────────────── #}
+        <div class="hero__corner hero__corner--tl" aria-hidden="true"></div>
+        <div class="hero__corner hero__corner--tr" aria-hidden="true"></div>
+        <div class="hero__corner hero__corner--bl" aria-hidden="true"></div>
+        <div class="hero__corner hero__corner--br" aria-hidden="true"></div>
+    </section>
+
+    {# ── Featured Products ───────────────────────────────── #}
+    <section class="section">
+        <div class="section__header">
+            <h2 class="section__title">
+                <span class="section__title-marker">//</span>
+                FEATURED PRODUCTS
+            </h2>
+            <a href="/products" class="section__link">VIEW ALL →</a>
+        </div>
+
+        {# Product grid — HTMX search results swap in here.
+           Initially shows featured products or a placeholder. #}
+        <div id="product-grid" class="product-grid">
+            {% if featured_products is defined and featured_products | length > 0 %}
+                {% for product in featured_products %}
+                    {% include "components/product_card.html" %}
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <svg class="empty-state__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                        <line x1="8" y1="21" x2="16" y2="21" />
+                        <line x1="12" y1="17" x2="12" y2="21" />
+                    </svg>
+                    <p class="empty-state__text">PRODUCT CATALOG LOADING...</p>
+                    <p class="empty-state__subtext">Products will appear here once inventory is initialized.</p>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    {# ── Quick Stats Bar ─────────────────────────────────── #}
+    <section class="stats-bar">
+        <div class="stats-bar__item">
+            <span class="stats-bar__value">—</span>
+            <span class="stats-bar__label">PRODUCTS</span>
+        </div>
+        <div class="stats-bar__divider"></div>
+        <div class="stats-bar__item">
+            <span class="stats-bar__value">—</span>
+            <span class="stats-bar__label">CATEGORIES</span>
+        </div>
+        <div class="stats-bar__divider"></div>
+        <div class="stats-bar__item">
+            <span class="stats-bar__value">24/7</span>
+            <span class="stats-bar__label">UPTIME</span>
+        </div>
+        <div class="stats-bar__divider"></div>
+        <div class="stats-bar__item">
+            <span class="stats-bar__value">AES-256</span>
+            <span class="stats-bar__label">ENCRYPTION</span>
+        </div>
+    </section>
+
+</main>
+{% endblock %}
